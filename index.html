@@ -20,6 +20,10 @@
             box-sizing: border-box;
         }
 
+        html{
+            scroll-behavior: smooth;
+        }
+
         i {
             color: white;
             background: transparent;
@@ -92,10 +96,88 @@
             } */
 
         }
+
+/* ------------------------------ Pre Loader ---------------------------- */
+/* ---------------------------------------------------------------------- */
+.loader_bg{
+position: fixed;
+z-index: 9999999999999;
+background: #fff;
+width: 100%;
+height: 100%;
+}
+.loader{
+border: 0 solid transparent;
+border-radius: 50%;
+width: 150px;
+height: 150px;
+position: absolute;
+top: calc(50vh - 75px);
+left: calc(50vw - 75px);
+}
+.loader::before, .loader::after{
+content: '';
+border: 1em solid #ff5733;
+border-radius: 50%;
+width: inherit;
+height: inherit;
+position: absolute;
+top: 0;
+left: 0;
+animation: loader 2s linear infinite;
+opacity: 0; 
+}
+.loader::before{
+animation-delay: .5s;
+}
+@keyframes loader{
+0%{
+transform: scale(0);
+opacity: 0;
+}
+50%{
+opacity: 1;
+}
+100%{
+transform: scale(1);
+opacity: 0;
+}
+}
+
+/* ------------------------------- To Up Arrow ---------------------------------------- */
+/* ----------------------------------------------------------------------------------- */
+.to-top{
+/* z-index: 9999999999999; */
+background:#FF5C83;
+position: fixed;
+bottom: 16px;
+right: 32px;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 32px;
+text-decoration: none;
+opacity: 0;
+pointer-events: none;
+transition: all .4s;
+/* border: 1px solid black; */
+}
+.to-top.active{
+bottom: 32px;
+pointer-events: auto;
+opacity: 1;
+}
     </style>
 </head>
 
-<body>
+<body onload="myFunc()">
+
+    <div class="loader_bg">
+      <div class="loader"></div>
+    </div>
 
     <!-- =================== Navbar ====================== -->
 
@@ -173,19 +255,31 @@
             </div>
         </div>
 
+        
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-6">
-                    <div id="result1"></div>
+                    <div id="result1">
+                        <h3 id="NoUsers1AreThere" class="mt-5" style="color: #FF5C83;"> First User is not there 😞!!</h3>
+                        <div class="spinner-border mt-5 ml-auto"  role="status" id="loading" style="display: none;"></div>  
+                    </div>
                 </div>
                 <div class="col-md-6 ">
-                    <div id="result2" class="ml-auto"></div>
+                    <div id="result2" class="ml-auto">
+                        <h3 id="NoUsers2AreThere" class="mt-5" style="color: #FF5C83;"> Second User is not there 😞!!</h3>
+                        <div class="spinner-border mt-5 mr-auto"  role="status" id="loading" style="display: none;"></div>    
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
+
+    <a href="#" class="to-top">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+        
 
     <!-- ================ Footer ================ -->
 
@@ -213,8 +307,27 @@
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
 
+        <script>
+            function myFunc() {
+            let value = document.querySelector('.loader_bg');
+            value.style.display = 'none';
+            }
+
+            let toTop = document.querySelector('.to-top');
+            window.addEventListener("scroll", () => {
+            if (window.pageYOffset > 100) {
+            toTop.classList.add("active");
+            } else {
+            toTop.classList.remove("active");
+            }
+            });
+
+        </script>
+
+
     <script src="result1.js"></script>
     <script src="result2.js"></script>
+
 
 </body>
 
